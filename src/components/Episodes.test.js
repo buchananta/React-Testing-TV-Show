@@ -89,8 +89,17 @@ const testEpisodes = [
       }
     }
 ]
+test ('renders without errors', () => {
+  render(<Episodes episodes={[]} />)
+})
 
-
-test('renders without errors', () => {
-  render(<Episodes episodes={testEpisodes} />)
+test('renders episodes', () => {
+  const { getByText, getAllByTestId } = render(<Episodes episodes={testEpisodes} />)
+  // I don't like the following, I would much rather:
+  testEpisodes.forEach(ep => getByText(ep.name))
+  // it's shorter, actually checks for rendered text
+  // and doesn't require modification of the Episodes.js file
+  // BUT, this is how he does it in the guided project,
+  // and so I will follow:
+  expect(getAllByTestId('episode')).toHaveLength(4);
 })

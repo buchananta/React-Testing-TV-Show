@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor, fireEvent, screen } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 import mockFetchShow from './api/fetchShow.js';
@@ -621,7 +621,9 @@ test("Renders without errors", async () => {
   await waitFor(() => getByText(/A love letter to the/i));
 })
 
-
+//I was going to try mocking out the dropdown
+//but Sam came to the rescue and I largely copied
+//his code for the latter test instead of doing this:
 // jest.mock('react-dropdown', ({options, onChange, placeholder, value}) => {
 //   return (
 //     <select
@@ -637,19 +639,8 @@ test("Renders without errors", async () => {
 
 
 
-// test("Render Episodes when API is called", async () => {
-//   render(<App />);
-//   await waitFor(() => userEvent.click(screen.getByText(/select/i)));
-//   const season1 = await screen.findByText(/season 1/i);
-//   await waitFor(() => fireEvent.click(season1));
 
-//   testData.data._embedded.episodes.forEach((ep) => {
-//     screen.getByText(ep.name);
-//   })
-// })
-
-
-test("Sames test", async () => {
+test("Render Episodes", async () => {
   render(<App />);
   const dropdown = await screen.findByText(/select a season/i);
   userEvent.click(dropdown);
